@@ -1,1 +1,1308 @@
 <!DOCTYPE html>\n<html lang=\
+                   <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Dua System — روزانہ دعا</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-pale: #F9F3E3;
+    --dark: #1A1208;
+    --deep: #2C1F0A;
+    --text: #3D2B0E;
+    --muted: #7A6040;
+    --white: #FFFDF7;
+    --green: #2D5A27;
+    --green-light: #4A8A42;
+    --blue: #1A3A5C;
+    --border: rgba(201,168,76,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Lato', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(160deg, #2C1F0A 0%, #1A1208 50%, #0F0B05 100%);
+    padding: 40px 20px 30px;
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%);
+  }
+  .header-bismillah {
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    direction: rtl;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(201,168,76,0.4);
+    position: relative;
+  }
+  .header-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-style: italic;
+    position: relative;
+  }
+  .header-sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 1px;
+    position: relative;
+  }
+
+  /* NAV TABS */
+  .nav {
+    background: var(--deep);
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+    padding: 0 10px;
+    gap: 4px;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    padding: 14px 16px;
+    font-size: 0.78rem;
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s;
+  }
+  .nav-btn.active, .nav-btn:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px 14px 60px;
+  }
+
+  /* SECTION HEADER */
+  .section-title {
+    text-align: center;
+    padding: 20px 0 16px;
+    color: var(--gold-light);
+    font-family: 'Amiri', serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    display: none;
+  }
+  .section-title.active { display: block; }
+
+  /* CARD */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    display: none;
+  }
+  .card.active { display: block; }
+
+  .card-header {
+    background: linear-gradient(135deg, var(--deep) 0%, #3D2B0E 100%);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    direction: ltr;
+  }
+  .card-header-left { flex: 1; }
+  .card-title-en {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .card-meta {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 2px;
+    letter-spacing: 0.4px;
+  }
+  .card-badge {
+    background: rgba(201,168,76,0.15);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.68rem;
+    color: var(--gold-light);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* SEGMENT */
+  .segment {
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    padding: 16px 18px 14px;
+  }
+  .segment:last-of-type { border-bottom: none; }
+
+  .arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.55rem;
+    line-height: 2;
+    color: var(--dark);
+    direction: rtl;
+    text-align: right;
+    margin-bottom: 6px;
+  }
+  .divider-line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 8px 0;
+  }
+  .english {
+    font-size: 0.82rem;
+    color: #4A3520;
+    direction: ltr;
+    text-align: left;
+    line-height: 1.6;
+    font-style: italic;
+    padding-left: 2px;
+  }
+  .urdu {
+    font-family: 'Noto Nastaliq Urdu', 'Amiri', serif;
+    font-size: 0.9rem;
+    line-height: 2;
+    color: var(--green);
+    direction: rtl;
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  /* REFERENCE */
+  .reference {
+    background: linear-gradient(135deg, #F5EDD5, var(--gold-pale));
+    padding: 10px 18px;
+    border-top: 2px solid var(--gold);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: ltr;
+    gap: 10px;
+  }
+  .ref-source {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--deep);
+    letter-spacing: 0.3px;
+  }
+  .ref-theme {
+    font-size: 0.68rem;
+    color: var(--muted);
+    background: rgba(201,168,76,0.25);
+    padding: 3px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  /* ROUTINE CARD */
+  .routine-card {
+    background: var(--white);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    display: none;
+  }
+  .routine-card.active { display: block; }
+  .routine-header {
+    background: linear-gradient(135deg, #1A3A5C, #0F2035);
+    padding: 14px 18px;
+    direction: ltr;
+  }
+  .routine-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #7EB8F5;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .routine-sub {
+    font-size: 0.7rem;
+    color: #4A7AAA;
+    margin-top: 2px;
+  }
+  .routine-body { padding: 0; }
+  .routine-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+    direction: ltr;
+  }
+  .routine-step:last-child { border-bottom: none; }
+  .step-num {
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-info { flex: 1; }
+  .step-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .step-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1rem;
+    color: var(--dark);
+    direction: rtl;
+    display: block;
+    margin: 2px 0;
+  }
+  .step-detail {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .step-times {
+    background: rgba(201,168,76,0.15);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    color: var(--gold);
+    white-space: nowrap;
+    align-self: center;
+  }
+
+  /* HIDDEN */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* SCROLL TOP */
+  .scroll-notice {
+    text-align: center;
+    font-size: 0.68rem;
+    color: var(--muted);
+    padding: 10px;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+  <div class="header-title">Daily Dua System</div>
+  <div class="header-sub">روزانہ دعا — Quran & Sahih Hadith Only</div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab('morning')">🌅 Morning</button>
+  <button class="nav-btn" onclick="showTab('evening')">🌙 Evening</button>
+  <button class="nav-btn" onclick="showTab('sleep')">😴 Before Sleep</button>
+  <button class="nav-btn" onclick="showTab('anytime')">🤲 Any Time</button>
+  <button class="nav-btn" onclick="showTab('routine')">📋 Routine</button>
+</nav>
+
+<div class="main">
+
+<!-- ==================== MORNING ==================== -->
+<div id="tab-morning" class="tab-content active">
+
+  <!-- CARD M1 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Sayyid ul-Istighfar — Master Forgiveness</div>
+        <div class="card-meta">Morning — After Fajr</div>
+      </div>
+      <span class="card-badge">1× Daily</span>
+    </div>
+
+    <div class="segment">
+      <div class="arabic">اللَّهُمَّ أَنْتَ رَبِّي</div>
+      <div class="divider-line"></div>
+      <div class="english">O Allah, You are my Lord</div>
+      <div class="urdu">اے اللہ، تو میرا رب ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">لَا إِلَهَ إِلَّا أَنْتَ</div>
+      <div class="divider-line"></div>
+      <div class="english">There is no god except You</div>
+      <div class="urdu">تیرے سوا کوئی معبود نہیں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">خَلَقْتَنِي وَأَنَا عَبْدُكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">You created me and I am Your servant</div>
+      <div class="urdu">تو نے مجھے بنایا اور میں تیرا بندہ ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ</div>
+      <div class="divider-line"></div>
+      <div class="english">I remain upon Your covenant and promise as best I can</div>
+      <div class="urdu">میں اپنی استطاعت کے مطابق تیرے عہد و وعدے پر قائم ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ</div>
+      <div class="divider-line"></div>
+      <div class="english">I acknowledge Your favour upon me</div>
+      <div class="urdu">میں تیری نعمتوں کا اعتراف کرتا ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَأَبُوءُ لَكَ بِذَنْبِي</div>
+      <div class="divider-line"></div>
+      <div class="english">And I confess my sin to You</div>
+      <div class="urdu">اور اپنے گناہوں کا اقرار کرتا ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</div>
+      <div class="divider-line"></div>
+      <div class="english">So forgive me, for no one forgives sins except You</div>
+      <div class="urdu">پس مجھے بخش دے، گناہ تیرے سوا کوئی نہیں بخش سکتا</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Sahih al-Bukhari 6306, 6323</span>
+      <span class="ref-theme">Forgiveness · Tawbah</span>
+    </div>
+  </div>
+
+  <!-- CARD M2 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Morning Entry — New Day Begins</div>
+        <div class="card-meta">Morning — Upon waking / after Fajr</div>
+      </div>
+      <span class="card-badge">1×</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">We have entered morning and all sovereignty belongs to Allah</div>
+      <div class="urdu">ہم نے صبح کی اور ساری بادشاہی اللہ کے لیے ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَالْحَمْدُ لِلَّهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">And all praise is for Allah</div>
+      <div class="urdu">اور تمام تعریفیں اللہ کے لیے ہیں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ</div>
+      <div class="divider-line"></div>
+      <div class="english">There is no god but Allah alone, He has no partner</div>
+      <div class="urdu">اللہ کے سوا کوئی معبود نہیں، وہ اکیلا ہے، اس کا کوئی شریک نہیں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</div>
+      <div class="divider-line"></div>
+      <div class="english">His is the dominion and His is all praise, and He is over all things powerful</div>
+      <div class="urdu">اسی کی بادشاہی اور اسی کی تعریف ہے، وہ ہر چیز پر قادر ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ</div>
+      <div class="divider-line"></div>
+      <div class="english">My Lord, I ask You for the good of this day and the good of what comes after it</div>
+      <div class="urdu">اے رب، میں تجھ سے آج کے دن کی بھلائی اور اس کے بعد کی بھلائی مانگتا ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ</div>
+      <div class="divider-line"></div>
+      <div class="english">And I seek refuge with You from the evil of this day and the evil of what comes after it</div>
+      <div class="urdu">اور آج کے دن کے شر اور اس کے بعد کے شر سے تیری پناہ مانگتا ہوں</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Sahih Muslim 2723, Abu Dawud 5071</span>
+      <span class="ref-theme">Protection · New Day · Barakah</span>
+    </div>
+  </div>
+
+  <!-- CARD M3 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Bismillah Protection — Morning Shield</div>
+        <div class="card-meta">Morning — 3 times</div>
+      </div>
+      <span class="card-badge">3× Times</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ</div>
+      <div class="divider-line"></div>
+      <div class="english">In the Name of Allah with Whose Name nothing can cause harm</div>
+      <div class="urdu">اللہ کے نام سے جس کے نام کے ساتھ کوئی چیز نقصان نہیں دے سکتی</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">فِي الْأَرْضِ وَلَا فِي السَّمَاءِ</div>
+      <div class="divider-line"></div>
+      <div class="english">Neither in the earth nor in the heavens</div>
+      <div class="urdu">نہ زمین میں نہ آسمان میں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَهُوَ السَّمِيعُ الْعَلِيمُ</div>
+      <div class="divider-line"></div>
+      <div class="english">And He is the All-Hearing, the All-Knowing</div>
+      <div class="urdu">اور وہ سب کچھ سننے والا، سب کچھ جاننے والا ہے</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Abu Dawud 5088, Tirmidhi 3388 — Sahih</span>
+      <span class="ref-theme">Protection · Safety until Evening</span>
+    </div>
+  </div>
+
+  <!-- CARD M4 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Tasbih of Juwayriyah — Most Powerful Dhikr</div>
+        <div class="card-meta">Morning — 3 times (outweighs hours of dhikr)</div>
+      </div>
+      <span class="card-badge">3× Times</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">How perfect is Allah and I praise Him</div>
+      <div class="urdu">اللہ پاک ہے اور اس کی حمد کے ساتھ</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">عَدَدَ خَلْقِهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">By the number of His creation</div>
+      <div class="urdu">اس کی مخلوق کی تعداد کے برابر</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَرِضَا نَفْسِهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">And His own pleasure</div>
+      <div class="urdu">اور اس کی ذاتی خوشنودی کے موافق</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَزِنَةَ عَرْشِهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">And the weight of His throne</div>
+      <div class="urdu">اور اس کے عرش کے وزن کے برابر</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَمِدَادَ كَلِمَاتِهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">And the ink of His words</div>
+      <div class="urdu">اور اس کے کلمات کی روشنائی کے برابر</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Sahih Muslim 2726</span>
+      <span class="ref-theme">Glorification · Infinite Reward</span>
+    </div>
+  </div>
+
+  <!-- CARD M5 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Three Quls — Full Protection</div>
+        <div class="card-meta">Morning — 3 times each surah</div>
+      </div>
+      <span class="card-badge">3× Each</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ</div>
+      <div class="divider-line"></div>
+      <div class="english">Say: He is Allah, One. Allah, the Eternal Refuge. He neither begets nor was begotten. And there is none comparable to Him.</div>
+      <div class="urdu">کہو: وہ اللہ ایک ہے۔ اللہ بے نیاز ہے۔ نہ اس کی کوئی اولاد نہ وہ کسی کی اولاد۔ اور کوئی اس کا ہمسر نہیں۔</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ</div>
+      <div class="divider-line"></div>
+      <div class="english">Say: I seek refuge in the Lord of daybreak. From the evil of what He created. From the evil of darkness as it settles. From the evil of those who blow on knots. And from the evil of an envier when he envies.</div>
+      <div class="urdu">کہو: میں طلوع فجر کے رب کی پناہ مانگتا ہوں۔ اس کی مخلوق کے شر سے۔ تاریکی کے شر سے۔ گانٹھوں پر پھونکنے والیوں کے شر سے۔ اور حسد کرنے والے کے شر سے۔</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ</div>
+      <div class="divider-line"></div>
+      <div class="english">Say: I seek refuge in the Lord of mankind, the King of mankind, the God of mankind — from the evil of the retreating whisperer, who whispers in the chests of people, from among the jinn and mankind.</div>
+      <div class="urdu">کہو: میں لوگوں کے رب کی پناہ مانگتا ہوں۔ لوگوں کے بادشاہ کی۔ لوگوں کے معبود کی۔ وسوسہ ڈالنے والے پیچھے ہٹنے والے کے شر سے، جو لوگوں کے سینوں میں وسوسہ ڈالتا ہے، جنوں اور انسانوں میں سے۔</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Abu Dawud 5082, Tirmidhi 3575 — Hisnul Muslim 76</span>
+      <span class="ref-theme">Protection · Evil Eye · Shaytan</span>
+    </div>
+  </div>
+
+  <!-- CARD M6 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Ayatul Kursi — Throne Verse</div>
+        <div class="card-meta">Morning — 1 time (angel protection all day)</div>
+      </div>
+      <span class="card-badge">1× Daily</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ</div>
+      <div class="divider-line"></div>
+      <div class="english">Allah — there is no deity except Him, the Ever-Living, the Sustainer of existence</div>
+      <div class="urdu">اللہ، اس کے سوا کوئی معبود نہیں، وہ زندہ ہے، سب کو قائم رکھنے والا ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ</div>
+      <div class="divider-line"></div>
+      <div class="english">Neither drowsiness overtakes Him nor sleep</div>
+      <div class="urdu">اسے نہ اونگھ آتی ہے نہ نیند</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ</div>
+      <div class="divider-line"></div>
+      <div class="english">To Him belongs whatever is in the heavens and whatever is on the earth</div>
+      <div class="urdu">آسمانوں اور زمین میں جو کچھ ہے سب اسی کا ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">Who is it that can intercede with Him except by His permission?</div>
+      <div class="urdu">کون ہے جو اس کی اجازت کے بغیر اس کے پاس سفارش کرے؟</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ</div>
+      <div class="divider-line"></div>
+      <div class="english">He knows what is before them and what will be after them</div>
+      <div class="urdu">وہ جانتا ہے جو ان کے آگے ہے اور جو ان کے پیچھے ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ</div>
+      <div class="divider-line"></div>
+      <div class="english">And they do not encompass a thing of His knowledge except for what He wills</div>
+      <div class="urdu">اور وہ اس کے علم میں سے کسی چیز کا احاطہ نہیں کر سکتے مگر جو وہ چاہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ</div>
+      <div class="divider-line"></div>
+      <div class="english">His Kursi extends over the heavens and the earth</div>
+      <div class="urdu">اس کی کرسی آسمانوں اور زمین کو گھیرے ہوئے ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَلَا يَئُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ</div>
+      <div class="divider-line"></div>
+      <div class="english">And their preservation does not tire Him. And He is the Most High, the Most Great.</div>
+      <div class="urdu">ان دونوں کی حفاظت اسے نہیں تھکاتی۔ وہ بلند ہے، عظیم ہے۔</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Quran 2:255 | Sahih Bukhari 2311 — Angel protection all day</span>
+      <span class="ref-theme">Greatest Verse · Full Protection</span>
+    </div>
+  </div>
+
+</div><!-- end morning -->
+
+<!-- ==================== EVENING ==================== -->
+<div id="tab-evening" class="tab-content">
+
+  <!-- E1 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Evening Entry — Night Begins</div>
+        <div class="card-meta">Evening — After Asr, before Maghrib</div>
+      </div>
+      <span class="card-badge">1×</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">We have entered evening and all sovereignty belongs to Allah</div>
+      <div class="urdu">ہم نے شام کی اور ساری بادشاہی اللہ کے لیے ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَالْحَمْدُ لِلَّهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">And all praise is for Allah</div>
+      <div class="urdu">اور تمام تعریفیں اللہ کے لیے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ</div>
+      <div class="divider-line"></div>
+      <div class="english">There is no god except Allah alone, He has no partner</div>
+      <div class="urdu">اللہ کے سوا کوئی معبود نہیں، وہ اکیلا ہے، اس کا کوئی شریک نہیں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا</div>
+      <div class="divider-line"></div>
+      <div class="english">My Lord, I ask You for the good of this night and the good of what comes after it</div>
+      <div class="urdu">اے رب، اس رات کی بھلائی اور اس کے بعد کی بھلائی مانگتا ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا</div>
+      <div class="divider-line"></div>
+      <div class="english">And I seek refuge with You from the evil of this night and the evil of what comes after it</div>
+      <div class="urdu">اور اس رات کے شر اور اس کے بعد کے شر سے تیری پناہ مانگتا ہوں</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Sahih Muslim 2723, Abu Dawud 5071</span>
+      <span class="ref-theme">Evening · Protection · Night Safety</span>
+    </div>
+  </div>
+
+  <!-- E2 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Seeking Allah's Refuge — 3 Times</div>
+        <div class="card-meta">Evening — 3 times</div>
+      </div>
+      <span class="card-badge">3× Times</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ</div>
+      <div class="divider-line"></div>
+      <div class="english">I seek refuge in the perfect words of Allah from the evil of what He has created</div>
+      <div class="urdu">میں اللہ کے کامل کلمات کے ذریعے اس کی مخلوق کے شر سے پناہ مانگتا ہوں</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Sahih Muslim 2709 — Hisnul Muslim 83</span>
+      <span class="ref-theme">Protection · Harm · Evil</span>
+    </div>
+  </div>
+
+  <!-- E3 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Salawat upon the Prophet ﷺ</div>
+        <div class="card-meta">Evening — 10 times (guaranteed intercession)</div>
+      </div>
+      <span class="card-badge">10× Times</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ</div>
+      <div class="divider-line"></div>
+      <div class="english">O Allah, send peace and blessings upon our Prophet Muhammad</div>
+      <div class="urdu">اے اللہ، ہمارے نبی محمد ﷺ پر درود و سلام بھیج</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 al-Tabarani — "Will gain my intercession on Day of Judgement"</span>
+      <span class="ref-theme">Intercession · Love for Prophet ﷺ</span>
+    </div>
+  </div>
+
+  <!-- E4 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Evening Gratitude</div>
+        <div class="card-meta">Evening — 1 time</div>
+      </div>
+      <span class="card-badge">1×</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">اللَّهُمَّ مَا أَمْسَى بِي مِنْ نِعْمَةٍ</div>
+      <div class="divider-line"></div>
+      <div class="english">O Allah, whatever blessing I have received this evening</div>
+      <div class="urdu">اے اللہ، جو بھی نعمت مجھے اس شام ملی</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">أَوْ بِأَحَدٍ مِنْ خَلْقِكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">Or by anyone among Your creation</div>
+      <div class="urdu">یا تیری مخلوق میں سے کسی کو ملی</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">It is from You alone, You have no partner</div>
+      <div class="urdu">وہ صرف تیری طرف سے ہے، تیرا کوئی شریک نہیں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ</div>
+      <div class="divider-line"></div>
+      <div class="english">So for You is all praise and for You is all thanks</div>
+      <div class="urdu">پس تیرے لیے ہی ہر تعریف ہے اور تیرا ہی شکر ہے</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Abu Dawud 5073, Ibn Sunni 41 — Hisnul Muslim 89</span>
+      <span class="ref-theme">Gratitude · Shukr · Acknowledging Blessings</span>
+    </div>
+  </div>
+
+</div><!-- end evening -->
+
+<!-- ==================== BEFORE SLEEP ==================== -->
+<div id="tab-sleep" class="tab-content">
+
+  <!-- S1 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Before Sleeping — Surrender to Allah</div>
+        <div class="card-meta">Before sleep — 1 time</div>
+      </div>
+      <span class="card-badge">1×</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا</div>
+      <div class="divider-line"></div>
+      <div class="english">In Your name, O Allah, I die and I live</div>
+      <div class="urdu">اے اللہ، تیرے نام کے ساتھ میں مرتا ہوں اور جیتا ہوں</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Sahih Bukhari 6324</span>
+      <span class="ref-theme">Sleep · Trust in Allah · Tawakkul</span>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Tasbeeh Before Sleep — 33×33×34</div>
+        <div class="card-meta">Before sleep (fills the scales of deeds)</div>
+      </div>
+      <span class="card-badge">33+33+34</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">سُبْحَانَ اللَّهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">How perfect is Allah — 33 times</div>
+      <div class="urdu">اللہ پاک ہے — ۳۳ بار</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">الْحَمْدُ لِلَّهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">All praise is for Allah — 33 times</div>
+      <div class="urdu">تمام تعریفیں اللہ کے لیے — ۳۳ بار</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">اللَّهُ أَكْبَرُ</div>
+      <div class="divider-line"></div>
+      <div class="english">Allah is the greatest — 34 times</div>
+      <div class="urdu">اللہ سب سے بڑا ہے — ۳۴ بار</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Sahih Bukhari 3113, Sahih Muslim 2727</span>
+      <span class="ref-theme">Tasbeeh · Scales of Deeds · Fatimah's Dhikr</span>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Surah Al-Mulk — Protects in Grave</div>
+        <div class="card-meta">Every night before sleep (Surah 67)</div>
+      </div>
+      <span class="card-badge">1× Nightly</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</div>
+      <div class="divider-line"></div>
+      <div class="english">Blessed is He in whose hand is dominion, and He is over all things competent</div>
+      <div class="urdu">بابرکت ہے وہ جس کے ہاتھ میں بادشاہی ہے اور وہ ہر چیز پر قادر ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">اقرأ سورة الملك كاملة — الآية ١ إلى ٣٠</div>
+      <div class="divider-line"></div>
+      <div class="english">Recite the full Surah Al-Mulk (Quran 67:1–30)</div>
+      <div class="urdu">سورۃ الملک مکمل پڑھیں (قرآن ۶۷:۱ تا ۳۰)</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Tirmidhi 2891 — "Intercedes for its reciter until forgiven"</span>
+      <span class="ref-theme">Protection in Grave · Forgiveness · Intercession</span>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Dua When Waking at Night</div>
+        <div class="card-meta">If you wake during night — then make dua</div>
+      </div>
+      <span class="card-badge">Any Wake</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ</div>
+      <div class="divider-line"></div>
+      <div class="english">There is no god but Allah alone, no partner has He</div>
+      <div class="urdu">اللہ کے سوا کوئی معبود نہیں، اکیلا ہے، کوئی شریک نہیں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</div>
+      <div class="divider-line"></div>
+      <div class="english">His is the dominion, His is all praise, and He is over all things capable</div>
+      <div class="urdu">اسی کی بادشاہی، اسی کی تعریف، وہ ہر چیز پر قادر ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">Glory be to Allah, praise be to Allah, there is no god but Allah, Allah is the greatest, and there is no power except with Allah</div>
+      <div class="urdu">اللہ پاک ہے، تعریف اللہ کی، کوئی معبود نہیں سوائے اللہ کے، اللہ سب سے بڑا ہے، کوئی طاقت نہیں مگر اللہ کی طرف سے</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Sahih Bukhari 1154 — "Then make any dua and it will be answered"</span>
+      <span class="ref-theme">Night Waking · Answered Dua · Tahajjud</span>
+    </div>
+  </div>
+
+</div><!-- end sleep -->
+
+<!-- ==================== ANY TIME ==================== -->
+<div id="tab-anytime" class="tab-content">
+
+  <!-- A1 - Distress -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Dua of Yunus ﷺ — From Extreme Distress</div>
+        <div class="card-meta">Any time — especially in hardship</div>
+      </div>
+      <span class="card-badge">Any Time</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">لَا إِلَهَ إِلَّا أَنْتَ</div>
+      <div class="divider-line"></div>
+      <div class="english">There is no deity except You</div>
+      <div class="urdu">تیرے سوا کوئی معبود نہیں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">سُبْحَانَكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">Glory be to You</div>
+      <div class="urdu">تو پاک ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">إِنِّي كُنْتُ مِنَ الظَّالِمِينَ</div>
+      <div class="divider-line"></div>
+      <div class="english">Indeed, I have been of the wrongdoers</div>
+      <div class="urdu">بے شک میں ظالموں میں سے تھا</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Quran 21:87 | Tirmidhi 3505 — "No Muslim says this in difficulty except Allah relieves it"</span>
+      <span class="ref-theme">Extreme Distress · Relief · Tawbah</span>
+    </div>
+  </div>
+
+  <!-- A2 - Anxiety -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Full Dua for Anxiety and Worry</div>
+        <div class="card-meta">Any time — when anxious or overwhelmed</div>
+      </div>
+      <span class="card-badge">Any Time</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">اللَّهُمَّ إِنِّي عَبْدُكَ ابْنُ عَبْدِكَ ابْنُ أَمَتِكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">O Allah, I am Your servant, son of Your servant, son of Your maidservant</div>
+      <div class="urdu">اے اللہ، میں تیرا بندہ ہوں، تیرے بندے کا بیٹا، تیری باندی کا بیٹا</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">نَاصِيَتِي بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">My forelock is in Your hand, Your decree upon me is certain, Your judgment upon me is just</div>
+      <div class="urdu">میری پیشانی تیرے ہاتھ میں ہے، میرے بارے میں تیرا حکم نافذ ہے، تیرا فیصلہ عادلانہ ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ سَمَّيْتَ بِهِ نَفْسَكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">I ask You by every name belonging to You, by which You have named Yourself</div>
+      <div class="urdu">میں تجھ سے تیرے ہر نام کے وسیلے سے مانگتا ہوں جو تو نے اپنے لیے رکھا</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي</div>
+      <div class="divider-line"></div>
+      <div class="english">That You make the Quran the spring of my heart</div>
+      <div class="urdu">کہ قرآن کو میرے دل کی بہار بنا دے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَنُورَ صَدْرِي وَجَلَاءَ حُزْنِي وَذَهَابَ هَمِّي</div>
+      <div class="divider-line"></div>
+      <div class="english">And the light of my chest, the remover of my grief, and the one that takes away my anxiety</div>
+      <div class="urdu">اور میرے سینے کا نور، میرے غم کو دور کرنے والا، اور میری پریشانی کو لے جانے والا</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Musnad Ahmad 3712 — "Allah removes his sorrow and replaces it with joy"</span>
+      <span class="ref-theme">Anxiety · Grief · Heart Healing</span>
+    </div>
+  </div>
+
+  <!-- A3 - Rizq -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Dua for Halal Rizq and Independence</div>
+        <div class="card-meta">Any time — for provision and self-sufficiency</div>
+      </div>
+      <span class="card-badge">Any Time</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">O Allah, suffice me with Your lawful against Your unlawful</div>
+      <div class="urdu">اے اللہ، حرام سے بچاتے ہوئے حلال سے مجھے کافی کر دے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">And enrich me by Your grace so that I need none besides You</div>
+      <div class="urdu">اور اپنے فضل سے مجھے اپنے سوا سب سے بے نیاز کر دے</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Tirmidhi 3563 — Hasan</span>
+      <span class="ref-theme">Rizq · Halal Income · Dignity</span>
+    </div>
+  </div>
+
+  <!-- A4 - Guidance -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Dua for Steadfastness of Heart</div>
+        <div class="card-meta">Any time — for firm faith and guidance</div>
+      </div>
+      <span class="card-badge">Any Time</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">يَا مُقَلِّبَ الْقُلُوبِ</div>
+      <div class="divider-line"></div>
+      <div class="english">O Turner of Hearts</div>
+      <div class="urdu">اے دلوں کو پھیرنے والے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">ثَبِّتْ قَلْبِي عَلَى دِينِكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">Make my heart firm upon Your religion</div>
+      <div class="urdu">میرے دل کو اپنے دین پر ثابت رکھ</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Tirmidhi 3522, Ahmad — "The Prophet ﷺ recited this frequently"</span>
+      <span class="ref-theme">Steadfastness · Iman · Guidance</span>
+    </div>
+  </div>
+
+  <!-- A5 - After hardship -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Ya Hayyu Ya Qayyum — For All Affairs</div>
+        <div class="card-meta">Any time — especially in difficulty</div>
+      </div>
+      <span class="card-badge">Any Time</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">يَا حَيُّ يَا قَيُّومُ</div>
+      <div class="divider-line"></div>
+      <div class="english">O Ever-Living, O Sustainer of all existence</div>
+      <div class="urdu">اے ہمیشہ زندہ، اے سب کو قائم رکھنے والے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">بِرَحْمَتِكَ أَسْتَغِيثُ</div>
+      <div class="divider-line"></div>
+      <div class="english">By Your mercy I seek help</div>
+      <div class="urdu">تیری رحمت کے ذریعے فریاد کرتا ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">أَصْلِحْ لِي شَأْنِي كُلَّهُ</div>
+      <div class="divider-line"></div>
+      <div class="english">Set right all my affairs</div>
+      <div class="urdu">میرا ہر معاملہ درست فرما دے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ</div>
+      <div class="divider-line"></div>
+      <div class="english">And do not leave me to myself even for the blink of an eye</div>
+      <div class="urdu">اور مجھے ایک پل کے لیے بھی میرے نفس کے حوالے نہ کر</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Mustadrak al-Hakim 1/545 — Al-Albani: Sahih al-Targhib 273</span>
+      <span class="ref-theme">All Affairs · Trust · Dependency on Allah</span>
+    </div>
+  </div>
+
+  <!-- A6 - Istikhara -->
+  <div class="card active">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-title-en">Salat al-Istikhara — When Making a Decision</div>
+        <div class="card-meta">After 2 rak'ah prayer — before deciding</div>
+      </div>
+      <span class="card-badge">When Needed</span>
+    </div>
+    <div class="segment">
+      <div class="arabic">اللَّهُمَّ إِنِّي أَسْتَخِيرُكَ بِعِلْمِكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">O Allah, I seek Your guidance through Your knowledge</div>
+      <div class="urdu">اے اللہ، میں تیرے علم کے وسیلے سے تجھ سے خیر مانگتا ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَأَسْتَقْدِرُكَ بِقُدْرَتِكَ</div>
+      <div class="divider-line"></div>
+      <div class="english">And I seek power through Your power</div>
+      <div class="urdu">اور تیری قدرت کے ذریعے طاقت مانگتا ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَأَسْأَلُكَ مِنْ فَضْلِكَ الْعَظِيمِ</div>
+      <div class="divider-line"></div>
+      <div class="english">And I ask You from Your vast bounty</div>
+      <div class="urdu">اور تیرے عظیم فضل سے مانگتا ہوں</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">فَإِنَّكَ تَقْدِرُ وَلَا أَقْدِرُ وَتَعْلَمُ وَلَا أَعْلَمُ وَأَنْتَ عَلَّامُ الْغُيُوبِ</div>
+      <div class="divider-line"></div>
+      <div class="english">For You are capable and I am not, You know and I do not know, and You are the Knower of all that is unseen</div>
+      <div class="urdu">تو قادر ہے میں نہیں، تو جانتا ہے میں نہیں، تو تمام غیب جانتا ہے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">اللَّهُمَّ إِنْ كُنْتَ تَعْلَمُ أَنَّ هَذَا الْأَمْرَ خَيْرٌ لِي فِي دِينِي وَمَعَاشِي وَعَاقِبَةِ أَمْرِي فَاقْدُرْهُ لِي وَيَسِّرْهُ لِي ثُمَّ بَارِكْ لِي فِيهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">O Allah, if You know that this matter is good for me in my religion, my livelihood and my future affairs, then ordain it for me, make it easy for me, then bless me in it</div>
+      <div class="urdu">اے اللہ، اگر تو جانتا ہے کہ یہ کام میرے دین، میری روزی اور انجام کار میرے لیے بہتر ہے تو اسے میرے لیے مقدر فرما، آسان فرما پھر اس میں میرے لیے برکت دے</div>
+    </div>
+    <div class="segment">
+      <div class="arabic">وَإِنْ كُنْتَ تَعْلَمُ أَنَّ هَذَا الْأَمْرَ شَرٌّ لِي فِي دِينِي وَمَعَاشِي وَعَاقِبَةِ أَمْرِي فَاصْرِفْهُ عَنِّي وَاصْرِفْنِي عَنْهُ وَاقْدُرْ لِي الْخَيْرَ حَيْثُ كَانَ ثُمَّ أَرْضِنِي بِهِ</div>
+      <div class="divider-line"></div>
+      <div class="english">And if You know that this matter is bad for me in my religion, my livelihood and my future affairs, then turn it away from me and turn me away from it, and ordain for me the good wherever it may be, then make me satisfied with it</div>
+      <div class="urdu">اور اگر تو جانتا ہے کہ یہ کام میرے لیے برا ہے تو اسے مجھ سے اور مجھے اس سے پھیر دے، اور جہاں بھی بھلائی ہو مجھے اس کے لیے مقدر فرما پھر مجھے اس سے راضی کر دے</div>
+    </div>
+    <div class="reference">
+      <span class="ref-source">📖 Sahih Bukhari 1166 — Jabir ibn Abdullah</span>
+      <span class="ref-theme">Decision Making · Guidance · Life Choices</span>
+    </div>
+  </div>
+
+</div><!-- end anytime -->
+
+<!-- ==================== ROUTINE ==================== -->
+<div id="tab-routine" class="tab-content">
+
+  <div class="routine-card active">
+    <div class="routine-header">
+      <div class="routine-title">🌅 Morning Routine Order</div>
+      <div class="routine-sub">After Fajr — until sunrise (20–25 min)</div>
+    </div>
+    <div class="routine-body">
+      <div class="routine-step">
+        <span class="step-num">1</span>
+        <div class="step-info">
+          <div class="step-name">Ayatul Kursi</div>
+          <span class="step-arabic">آيَةُ الْكُرْسِيِّ</span>
+          <div class="step-detail">Angel protection all day</div>
+        </div>
+        <span class="step-times">1×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">2</span>
+        <div class="step-info">
+          <div class="step-name">Three Quls (Ikhlas, Falaq, Nas)</div>
+          <span class="step-arabic">ثَلَاثُ قُلْ</span>
+          <div class="step-detail">Protection from every evil</div>
+        </div>
+        <span class="step-times">3× each</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">3</span>
+        <div class="step-info">
+          <div class="step-name">Sayyid ul-Istighfar</div>
+          <span class="step-arabic">سَيِّدُ الِاسْتِغْفَارِ</span>
+          <div class="step-detail">Master forgiveness dua</div>
+        </div>
+        <span class="step-times">1×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">4</span>
+        <div class="step-info">
+          <div class="step-name">Morning Entry Dua</div>
+          <span class="step-arabic">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ</span>
+          <div class="step-detail">New day beginning</div>
+        </div>
+        <span class="step-times">1×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">5</span>
+        <div class="step-info">
+          <div class="step-name">Bismillah Protection</div>
+          <span class="step-arabic">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ</span>
+          <div class="step-detail">Nothing can harm until evening</div>
+        </div>
+        <span class="step-times">3×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">6</span>
+        <div class="step-info">
+          <div class="step-name">Tasbih of Juwayriyah</div>
+          <span class="step-arabic">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ عَدَدَ خَلْقِهِ</span>
+          <div class="step-detail">Outweighs hours of dhikr</div>
+        </div>
+        <span class="step-times">3×</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="routine-card active">
+    <div class="routine-header">
+      <div class="routine-title">🌙 Evening Routine Order</div>
+      <div class="routine-sub">After Asr — before Maghrib (15–20 min)</div>
+    </div>
+    <div class="routine-body">
+      <div class="routine-step">
+        <span class="step-num">1</span>
+        <div class="step-info">
+          <div class="step-name">Ayatul Kursi</div>
+          <span class="step-arabic">آيَةُ الْكُرْسِيِّ</span>
+          <div class="step-detail">Angel protection all night</div>
+        </div>
+        <span class="step-times">1×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">2</span>
+        <div class="step-info">
+          <div class="step-name">Three Quls</div>
+          <span class="step-arabic">ثَلَاثُ قُلْ</span>
+          <div class="step-detail">Protection for the night</div>
+        </div>
+        <span class="step-times">3× each</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">3</span>
+        <div class="step-info">
+          <div class="step-name">Evening Entry Dua</div>
+          <span class="step-arabic">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ</span>
+          <div class="step-detail">Night beginning</div>
+        </div>
+        <span class="step-times">1×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">4</span>
+        <div class="step-info">
+          <div class="step-name">Bismillah Protection</div>
+          <span class="step-arabic">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ</span>
+          <div class="step-detail">Nothing can harm until morning</div>
+        </div>
+        <span class="step-times">3×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">5</span>
+        <div class="step-info">
+          <div class="step-name">Salawat upon Prophet ﷺ</div>
+          <span class="step-arabic">اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ</span>
+          <div class="step-detail">Guaranteed intercession</div>
+        </div>
+        <span class="step-times">10×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num">6</span>
+        <div class="step-info">
+          <div class="step-name">Evening Gratitude Dua</div>
+          <span class="step-arabic">اللَّهُمَّ مَا أَمْسَى بِي مِنْ نِعْمَةٍ</span>
+          <div class="step-detail">Acknowledge all blessings</div>
+        </div>
+        <span class="step-times">1×</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="routine-card active">
+    <div class="routine-header" style="background: linear-gradient(135deg, #2D5A27, #1A3A15);">
+      <div class="routine-title" style="color: #90EE90;">🌿 Core Essential Set — Minimum 5</div>
+      <div class="routine-sub" style="color: #4A8A42;">Start here if pressed for time</div>
+    </div>
+    <div class="routine-body">
+      <div class="routine-step">
+        <span class="step-num" style="background: #2D5A27; color: white;">1</span>
+        <div class="step-info">
+          <div class="step-name">Ayatul Kursi</div>
+          <div class="step-detail">Morning + Evening — greatest verse in Quran</div>
+        </div>
+        <span class="step-times">1× each</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num" style="background: #2D5A27; color: white;">2</span>
+        <div class="step-info">
+          <div class="step-name">Sayyid ul-Istighfar</div>
+          <div class="step-detail">Morning — if he dies that day, he enters Jannah</div>
+        </div>
+        <span class="step-times">1×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num" style="background: #2D5A27; color: white;">3</span>
+        <div class="step-info">
+          <div class="step-name">Bismillah Protection</div>
+          <div class="step-detail">Morning + Evening — full day/night protection</div>
+        </div>
+        <span class="step-times">3×</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num" style="background: #2D5A27; color: white;">4</span>
+        <div class="step-info">
+          <div class="step-name">Dua of Yunus ﷺ</div>
+          <div class="step-detail">Any time — Allah relieves every difficulty</div>
+        </div>
+        <span class="step-times">Any time</span>
+      </div>
+      <div class="routine-step">
+        <span class="step-num" style="background: #2D5A27; color: white;">5</span>
+        <div class="step-info">
+          <div class="step-name">Ya Hayyu Ya Qayyum</div>
+          <div class="step-detail">Any time — all affairs set right</div>
+        </div>
+        <span class="step-times">Any time</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-notice">All duas from Quran and Sahih Hadith only · No weak narrations included without label</div>
+
+</div><!-- end routine -->
+
+</div><!-- main -->
+
+<script>
+function showTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
